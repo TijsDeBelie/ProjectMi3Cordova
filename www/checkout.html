@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
+<body>
+<div id="paypal-button"></div>
+<script>
+    paypal.Button.render({
+        env: 'sandbox',  // Or 'sandbox'
+        commit: true,// Show 'Pay Now' button
+        client: {
+            production: 'Ac7Z49RafAP3o8EwH26bBzESvFV0x0ThtV2Y1XiNGui4xCPtloeMO42ACJri-qfb99FoFdiph6FJFNg0',
+            sandbox:    'AZiUAB7drNyDBP9S0lqzSNXd70J5MqIuqdIbu_Y-C26ql1xPhHYzK2x16uzHJ3rQTdVVsYIlflQshgJR'
+
+        },
+        payment: function (data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '0.01', currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        },
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function(payment) {
+
+                alert("you have succesfully payed");
+            });
+
+
+        }
+    }, '#paypal-button');
+</script>
+</body>
+</html>

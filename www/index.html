@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*  'unsafe-eval' data: gap: https://ssl.gstatic.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' www.google-analytics.com/* https://* http://* data: content:;">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Concert-Tracker</title>
+	<link rel="stylesheet" href="css/framework7.material.min.css">
+	<link rel="stylesheet" href="css/framework7.material.colors.min.css">
+	<link rel="stylesheet" href="css/my-app.css">
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="img/Concert-Tracker_Logo.png" />
+	<script src="GoogleAnalytics.js"></script>
+	<script src="GoogleTagManager.js" async></script>
+	<script src="js/jquery-dateFormat.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+</head>
+<style type="text/css">
+	body {
+		visibility: hidden;
+	}
+	
+	#loading {
+		visibility: visible;
+	}
+</style>
+
+<body class="theme-blue layout-dark">
+	<!-- Status bar overlay for fullscreen mode-->
+	<div class="statusbar-overlay"></div>
+	<div class="panel-overlay"></div>
+	<div class="panel panel-left panel-reveal">
+		<div class="content-block" id="linkerTab">
+			<div style="width: 100%"> <img src="img/tijsFoto.jpg" style="width: 80%; height: 80%" id="profielfoto"> </div>
+			<div class="Welcome"></div>
+			<a href="#Settings" id="btnSettings" class="button button-fill color-white panel-close" style="color: rgb(116,116,117);"><img src="img/Settings.png" class="imgSettings" width="20px"> Settings</a>
+			<br>
+			<a href="#Orders" id="btnOrders" class="button button-fill color-white panel-close" style="color: rgb(116,116,117);"><img src="img/Concert-Tracker_Logo.png" class="imgSettings" width="20px"> Orders</a>
+			<br>
+			<input type="button" id="logout" value="Logout" class="button button-fill color-blue" /> </div>
+	</div>
+	<!-- Views-->
+	<div class="views">
+		<div class="view view-main">
+			<div class="pages navbar-through toolbar-through">
+				<!-- Start page index -->
+				<!-- NAAM PAGINA BEVINT ZICH HIERONDER -->
+				<div class="page" data-page="search" id="search">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"> <a href="#index" data-panel="left" class="button link">Home</a> <a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content hide-toolbar-on-scroll">
+						<div id="Welcome" class="content-block-title"></div>
+						<div class="popup tablet-fullscreen">
+							<div class="content-block">
+								<h2 id="eventName"></h2>
+								<p id="eventPicture"></p>
+								<p id="eventDate"></p>
+								<p id="eventPlace"></p>
+								<p id="eventAddress"></p>
+								<p id="eventAddressMap" style="width: 100%"> </p>
+								<p id="eventDesc"></p>
+								<h5 id="boughtinfo"></h5>
+								<label style="padding-right: 5%; padding-bottom: 2%">Amount:</label>
+								<input type="number" value="1" max="20" min="1" id="amount">
+								<input class="button button-round" type="button" value="Add Ticket(s) to order list" id="buy">
+								<p><a href="#" id="close" class="close-popup">X</a></p>
+							</div>
+						</div>
+						<div class="content-block-title"> You can search for an event, by date, by name, by place,
+							<br>or all of those combined.
+							<p>Click the name of an event to display further information.</p>
+						</div>
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-input">
+												<form>
+													<input type="text" id="myMonth" placeholder="Search by date of event" title="All events with a date the same or later than the requested date will be shown!" readonly>
+													<input type="text" name="name" id="myText" placeholder="Search by name of event" title="Only events matching with the exact words will be shown!">
+													<input type="text" name="name" id="myPlace" placeholder="Search by country" title="Only events matching within the country will be shown, the list is autocomplete">
+													<input class="button button-round" type="reset" value="Reset"> </form>
+											</div> <a href="#" id="bevestig" class="button button-big button-round">SEARCH EVENTS</a>
+											<div class="col-25" id="loading"> <span class="preloader"></span>
+												<h5>Loading, please wait</h5> </div>
+											<div id="adiv"></div>
+											<p class="buttons-row">
+												<input type="button" class="button button-fill" id="prev" value="Previous page">
+												<input type="button" class="button button-fill" id="next" value="Next page"> </p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div data-page="About" class="page cached">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"><a href="#search" data-panel="left" class="button link">Home</a><a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content">
+						<div class="content-block-title">
+							<h2>Creators of this app <img class="imgAbout" src="img/pen.jpg" width="50"></h2></div>
+						<div class="content-block">
+							<div class="content-block inset">
+								<div class="content-block-inner">
+									<h2>Tijs De Belie</h2><img class="imgAbout" src="img/tijsFoto.jpg" width="200" style="border-radius: 5%">
+									<h2>Senne Valvekens</h2><img class="imgAbout" src="img/SenneFoto.jpg" width="200" style="border-radius: 5%">
+									<h2>Manon Michiels</h2><img class="imgAbout" src="img/ManonFoto.jpg" width="200" style="border-radius: 5%">
+									<p>We are three students currently studying applied informatics, whom have chosen to create a mobile app for one of our courses: mobile and internet 3.</p>
+									<p>The app we have created has the main purpose to find and order tickets for concerts in large areas of the world, we did this because we all have a passion for music. It could become a well used app because like us there are many people interested in music To find a concert you can search by name, date or country. Clicking a concert reveals the information screen which contains a button to add that ticket to your order list. When you are done finding concerts you can check all your ordered tickets in the order list, there you can also pay for them. </p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-page="Orders" class="page cached">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"><a href="#search" data-panel="left" class="button link">Home</a><a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content">
+						<div class="content-block-title">
+							<h2>Tickets</h2></div>
+						<div class="content-block">
+							<div class="content-block inset">
+								<div class="content-block-inner">
+									<p id="TicketsList">All tickets you are buying are displayed below, click the delete button to remove the order completely:</p>
+									<table class='list'> </table>
+									<div id="checkout">
+										<button id="buyButton" class="button button-fill color-blue">Pay</button>
+										<button id="scanbutton" class="button button-fill color-blue">Scan</button>
+									</div>
+									<p id="errorbuy"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-page="Settings" class="page cached">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"><a href="#search" data-panel="left" class="button link">Home</a><a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content">
+						<div class="content-block-title">
+							<h2>Settings</h2></div>
+						<div class="content-block">
+							<div class="content-block inset">
+								<div class="content-block-inner">
+									<div class="list-block">
+										<ul>
+											<li>
+												<a href="#Thema" class="item-link">
+													<div class="item-content">
+														<div class="item-inner">
+															<div class="item-title">Thema</div>
+														</div>
+													</div>
+												</a>
+											</li>
+											<li>
+												<a href="#Account" class="item-link">
+													<div class="item-content">
+														<div class="item-inner">
+															<div class="item-title">Account</div>
+														</div>
+													</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-page="Thema" class="page cached">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"><a href="#search" data-panel="left" class="button link">Home</a><a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content">
+						<div class="content-block-title">
+							<h2>Settings</h2></div>
+						<div class="content-block">
+							<div class="content-block inset">
+								<div class="content-block-inner"> <a href="bars-fixed-index.html" class="back">Back</a>
+									<h3>Choose a color to change the theme</h3>
+									<div class="list-block">
+										<form id="formThema">
+											<ul>
+												<!-- Single radio input -->
+												<li>
+													<label class="label-radio item-content">
+														<!-- Checked by default -->
+														<input type="radio" name="themaRadio" value="Blauw" checked="checked" id="blue">
+														<div class="item-media"> <i class="icon icon-form-radio"></i> </div>
+														<div class="item-inner">
+															<div class="item-title">Blue</div>
+															<div class="Blauw" style="background-color: rgb(30,128,240); width: 100px; height: 30px"></div>
+														</div>
+													</label>
+												</li>
+												<!-- Another radio input -->
+												<li>
+													<label class="label-radio item-content">
+														<input type="radio" name="themaRadio" value="Oranje" id="orange">
+														<div class="item-media"> <i class="icon icon-form-radio"></i> </div>
+														<div class="item-inner">
+															<div class="item-title">Orange</div>
+															<div class="Oranje" style="background-color: orange; width: 100px; height: 30px"></div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="label-radio item-content">
+														<input type="radio" name="themaRadio" value="Groen" id="green">
+														<div class="item-media"> <i class="icon icon-form-radio"></i> </div>
+														<div class="item-inner">
+															<div class="item-title">Green</div>
+															<div class="Groen" style="background-color: green; width: 100px; height: 30px"></div>
+														</div>
+													</label>
+												</li>
+												<br>
+												<li>
+													<form>
+														<p id="SaveText"></p>
+														<p id="SaveTextError"></p>
+														<input type="button" class="button button-fill" id="btnSave" value="Save"> </form>
+												</li>
+											</ul>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-page="Account" class="page cached">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a href="#login" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+							</div>
+							<div class="center sliding"><img src="img/Concert-Tracker_Logo.png" class="LogoTitel" width="45">ConcertTracker</div>
+						</div>
+					</div>
+					<div class="toolbar toolbar-bottom">
+						<div class="toolbar-inner"><a href="#search" data-panel="left" class="button link">Home</a><a href="#About" class="button link">About</a></div>
+					</div>
+					<div class="page-content">
+						<div class="content-block-title">
+							<h2>Settings</h2></div>
+						<div class="content-block">
+							<div class="content-block inset">
+								<div class="content-block-inner"> <a href="bars-fixed-index.html" class="back">Back</a>
+									<h3>Fill in/Change your data and press save</h3> </div>
+							</div>
+							<div class="list-block inset">
+								<ul>
+									<!-- Text inputs -->
+									<li>
+										<div class="item-content">
+											<div class="item-media"><i class="icon f7-icons">Firstname</i></div>
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="text" id="txtVoornaam" placeholder="Firstname"> </div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-media"><i class="icon f7-icons">Name</i></div>
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="text" id="txtFamilienaam" placeholder="Last name"> </div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-media"><i class="icon f7-icons">E-mail</i></div>
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="email" id="txtEmail" placeholder="E-mail"> </div>
+											</div>
+										</div>
+									</li>
+									<!-- Date -->
+									<li>
+										<div class="item-content">
+											<div class="item-media"><i class="icon f7-icons">Birthday</i></div>
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="date" id="txtGeboortedatum" placeholder="Birthday" value="2000-04-30"> </div>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<br>
+								<ul>
+									<li>
+										<form>
+											<p id="SaveAccount"></p>
+											<input type="button" class="button button-fill" id="btnSaveAccount" value="Save"> </form>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Path to Framework7 Library JS-->
+	<script type="text/javascript" src="js/framework7.min.js"></script>
+	<!-- Path to your app js-->
+	<script type="text/javascript" src="search.js"></script>
+	<script type="text/javascript" src="js/my-app.js"></script>
+	<link rel="stylesheet" href="css/my-app.css"> </body>
+
+</html>

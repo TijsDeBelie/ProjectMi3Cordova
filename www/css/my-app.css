@@ -1,0 +1,167 @@
+
+#adiv tr {
+
+    height:60px;
+    border-color: white;
+    border-radius: 2px;
+    border-color: rgb(30, 128, 240);
+
+    color: white;
+
+}
+#adiv tr td {
+    padding:4px;
+}
+#adiv th {
+    padding:4px;
+}
+.col-25 {
+    padding:5px;
+    text-align:center;
+}
+#loading {
+    display: none;
+}
+.theme-blue .input-field.focus-state:after, .theme-blue .input-field.not-empty-state:after, .theme-blue .item-input-field.focus-state:after, .theme-blue .item-input-field.not-empty-state:after {
+    display: none;
+}
+/*.navbar-inner{
+    background-color: red;
+}
+.toolbar-inner {
+    background-color: red;
+
+}
+*/
+.imgSettings {
+    vertical-align: middle;
+}
+.LogoTitel {
+    vertical-align: middle;
+}
+#linkertab.content-block {
+height: 100%;
+}
+#SaveText {
+    color: green;
+    text-align: center;
+}
+
+.EventName:hover{
+
+    background-color: grey;
+}
+#SaveTextError {
+    color: red;
+    text-align: center;
+}
+#kop {
+    height: 45%;
+    /*
+    opacity: 0.6;
+    */
+    width: 100%;
+    position: absolute;
+    border-radius: 5px;
+    border-style: inset;
+    margin-top: 0;
+
+
+}
+.back{
+
+    margin-top: 63%;
+    width: 100%;
+    height: 20%;
+    font-family: "Times New Roman", Times, serif;
+
+
+}
+.back2{
+
+    margin-top: 58%;
+    width: 100%;
+    height: 20%;
+    font-family: "Times New Roman", Times, serif;
+
+
+}
+
+/*
+.loginn{
+    padding-left: 1px;
+    margin-left: 0;
+}
+*/
+#buyTickets{
+    color: white;
+    padding: 0;
+
+
+    position: relative;
+    opacity: 0.8;
+}
+#error{
+    background-color: black;
+    margin-left: 2px;
+    width: 100%;
+    color:#f2f;
+    -webkit-animation: flash linear 2.5s infinite;
+    animation: flash linear 2.5s infinite;
+}
+@-webkit-keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: .5; }
+    100% { opacity: 1; }
+}
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: .5; }
+    100% { opacity: 1; }
+}
+/* Pulse class and keyframe animation */
+.pulseit{
+    -webkit-animation: pulse linear 2.5s infinite;
+    animation: pulse linear 2.5s infinite;
+}
+
+#muziekCreate{
+    height: 28%;
+    /*
+    opacity: 0.6;
+    */
+    width: 100%;
+    position: absolute;
+    border-radius: 5px;
+    border-style: inset;
+    margin-top: 0;
+}
+#createform {
+    margin-bottom: 0;
+}
+#ticket {
+    height:60px;
+    border-color: white;
+    border-radius: 2px;
+    border-color: rgb(30, 128, 240);
+
+    color: white;
+}
+
+#ticket tr td {
+    padding:4px;
+}
+#ticket th {
+    padding:4px;
+}
+#close{
+    line-height: 12px;
+    width: 18px;
+    font-size: 20pt;
+    font-family: tahoma;
+    margin-top: 10px;
+    margin-right: 5px;
+    position:absolute;
+    top:2px;
+    right:2px;
+}
