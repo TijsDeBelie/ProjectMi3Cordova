@@ -1,0 +1,7 @@
+.idea
+platforms
+plugins
+res
+resources/signing
+node_modules
+php/database.php
