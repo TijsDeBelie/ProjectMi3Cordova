@@ -613,20 +613,17 @@ function scan() {
 	cordova.plugins.barcodeScanner.scan(function (result) {
 		if (!result.cancelled) {
 			if (result.format == "QR_CODE") {
-				navigator.notification.alert("You have scanned a discount code", discount(result), "Thanks", "Great")
-				console.log(result);
+				if (result.text === "U53994654Su") {
+					navigator.notification.alert('You have received 15% discount', addDiscount, 'Discount', 'Great');
+				}
+				else {
+					navigator.notification.alert('This is not a discount code', '', 'error', 'ok');
+				}
 			}
 		}
 	}, function (error) {
-		alert("Scanning failed: " + error);
+		navigator.notification.alert("Scanning failed: " + error);
 	});
-}
-
-function discount(result) {
-	if (result.text === "U53994654Su") {
-		navigator.notification.alert('You have received 15% discount', addDiscount, 'Discount', 'Great');
-	}
-	console.log("discount function called")
 }
 
 function addDiscount() { //TODO HERE COMES THE AJAX REQUEST THAT HANDLES THE DISCOUNT BACKEND
